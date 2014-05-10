@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import main.java.info.jtrac.service.dto.SpaceDTO;
-import main.java.info.jtrac.util.MappingUtil;
-
-import com.vaadin.event.ItemClickEvent;
-import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -22,7 +18,6 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
 import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
-import be.jtrack.jtrackwebinterface.frontend.panel.Pnl_CustomField;
 import be.jtrack.jtrackwebinterface.util.Icon;
 
 public class Pnl_ApplicationOverview extends L18NPanel{
@@ -86,7 +81,7 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 				wdw_BaseWindow.setClosable(false);
 				wdw_BaseWindow.setResizable(false);
 				wdw_BaseWindow.setModal(true);
-				wdw_BaseWindow.setContent(new Pnl_ApplicationDetail());
+				wdw_BaseWindow.setContent(new Pnl_ApplicationDetail(lst_SpaceDTO, wdw_BaseWindow));
 				wdw_BaseWindow.setWidth("50%");
 				/* show the notification window */
 				getUI().addWindow(wdw_BaseWindow);

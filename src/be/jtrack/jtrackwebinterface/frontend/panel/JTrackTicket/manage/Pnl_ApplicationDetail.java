@@ -5,7 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import main.java.info.jtrac.exception.manager.ManagerException;
 import main.java.info.jtrac.service.dto.SpaceDTO;
+import main.java.info.jtrac.service.manager.IManager;
 import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
 import be.jtrack.jtrackwebinterface.util.Icon;
 
@@ -16,9 +21,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
-
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Window;
+@SuppressWarnings("unchecked")
 public class Pnl_ApplicationDetail extends L18NPanel{
 	/**
 	 * Serial version ID
@@ -28,6 +36,11 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	private final String abstractComponentHeight = "25px";
 	private final String abstractButtonWidht = "120px";
 	private final String abstractComponentWidht = "340px";
+	/*
+	 * Instance members
+	 */
+	ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContent.xml"});	
+	IManager<SpaceDTO> iSpaceManager = (IManager<SpaceDTO>) context.getBean("iSpaceManager");
 	/* Label */
 	private Label lbl_Space_Details;
 	private Label lbl_Space_DisplayName;
@@ -35,6 +48,7 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	private Label lbl_Space_Description;
 	private Label lbl_Space_MakePublic;
 	private Label lbl_Space_CopyExisting;
+	private Label lbl_SpaceDTO_Id;
 	/* TextField */ 
 	private TextField txt_Space_DisplayName;
 	private TextField txt_Space_SpaceKey;
@@ -51,6 +65,8 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	/* List */
 	private List<SpaceDTO> lst_SpaceDTO;
 	private Map<Item, SpaceDTO> map_ItemSpaceDTO;
+	/* Window */
+	private Window win_ParentWindow;
 	/**
 	 * Default constructor for the Class
 	 */
@@ -61,10 +77,11 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	 * Constructor for the Class
 	 * @param listSpaceDTO as List<SpaceDTO>
 	 */
-	public Pnl_ApplicationDetail(List<SpaceDTO> listSpaceDTO){
+	public Pnl_ApplicationDetail(List<SpaceDTO> listSpaceDTO, Window window){
 		this();
 		this.lst_SpaceDTO = listSpaceDTO;
 		this.initComboBoxSpaceDTO();
+		this.win_ParentWindow = window;
 	}
 	/*
 	 * Method will initialize the panel
@@ -72,19 +89,65 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	private void init(){
 		/* data */
 		this.lst_SpaceDTO = new ArrayList<SpaceDTO>();
+		this.lbl_SpaceDTO_Id = new Label();
 		this.map_ItemSpaceDTO = new HashMap<Item, SpaceDTO>();
 		/* Button */
 		this.btn_CopySpaceDTO = new Button(captions.getString("CAP.BTN.2"));
 		this.btn_CopySpaceDTO.setWidth(this.abstractComponentWidht);
 		this.btn_CopySpaceDTO.setHeight(this.abstractComponentHeight);
+		this.btn_CopySpaceDTO.addClickListener(new Button.ClickListener() {
+			/**
+			 * Serial Version iD
+			 */
+			private static final long serialVersionUID = -7899291233506208783L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				SpaceDTO dto = map_ItemSpaceDTO.get(cmb_Spaces.getValue());
+				Notification.show(dto.getDescription());
+			}
+		});
 		this.btn_Close = new Button(captions.getString("CAP.BTN.9"));
 		this.btn_Close.setHeight(this.abstractComponentHeight);
 		this.btn_Close.setWidth(this.abstractButtonWidht);
 		this.btn_Close.setIcon(Icon.iconClose);
+		this.btn_Close.addClickListener(new Button.ClickListener() {
+			/**
+			 * Serial Version iD
+			 */
+			private static final long serialVersionUID = -7899291233506208783L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				win_ParentWindow.close();
+			}
+		});
 		this.btn_Save = new Button(captions.getString("CAP.BTN.1"));
 		this.btn_Save.setHeight(this.abstractComponentHeight);
 		this.btn_Save.setWidth(this.abstractButtonWidht);
 		this.btn_Save.setIcon(Icon.iconSave);
+		this.btn_Save.addClickListener(new Button.ClickListener() {
+			/**
+			 * Serial Version iD
+			 */
+			private static final long serialVersionUID = -7899291233506208783L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if(null != lbl_SpaceDTO_Id.getValue() && 0 != lbl_SpaceDTO_Id.getValue().length()){
+					try {
+						iSpaceManager.update(getSpaceDTO());
+					} catch (ManagerException e) {
+						Notification.show(e.getMessage());
+					}
+				}else{
+					try {
+						iSpaceManager.persist(getSpaceDTO());
+					} catch (ManagerException e) {
+						Notification.show(e.getMessage());
+					}	
+				}
+				Notification.show(captions.getString("CAP.DESC.8"));
+				win_ParentWindow.close();
+			}
+		});
 		/* ComboBox */
 		this.cmb_Spaces = new ComboBox();
 		this.cmb_Spaces.setHeight(this.abstractComponentHeight);
@@ -147,4 +210,26 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 			map_ItemSpaceDTO.put(object, dto);
 		}
 	}
+	/*
+	 * Method will get the info out the TextFields
+	 * @return
+	 */
+	private SpaceDTO getSpaceDTO(){
+		SpaceDTO dto = null;		
+		if(null != lbl_SpaceDTO_Id.getValue() && 0 == lbl_SpaceDTO_Id.getValue().length()){
+			/* new SpaceDTO */
+			dto = new SpaceDTO();
+		}else{
+			/* get the object out the map and update the values */
+			for(SpaceDTO d : lst_SpaceDTO){
+				if(lbl_SpaceDTO_Id.getValue().equals(d.getId())){
+					dto = d;
+				}
+			}
+		}
+		dto.setDescription(txt_Space_Description.getValue());
+		dto.setName(this.txt_Space_DisplayName.getValue());
+		dto.setPrefixCode(this.txt_Space_SpaceKey.getValue());	
+		return dto;
+	}	
 }
