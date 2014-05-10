@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 	"http://www.springframework.org/dtd/spring-beans.dtd">
+<!--  spring AOP  - logging implementatie opzoeken + beheer van transacties -->
+<beans>
+    <bean id="dataSource2" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+		<property name="url" value="jdbc:sqlserver://VTWRKS35\IMOSSQL2008R2;databaseName=teamviewerdb"/>
+		<property name="username" value="TicketSQLAdmin"/>
+		<property name="password" value="admin@TICKET"/>
+    </bean>
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource2"/>
+        <property name="packagesToScan" value="com.blog.cavalr.entity" />
+        <property name="hibernateProperties">
+            <props>
+				<prop key="hibernate.archive.autodetection">class</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+            </props>
+        </property>
+        <property name="annotatedClasses">
+			<list>
+				<value>be.jtrackteamviewerplugin.business.bean.TeamViewer</value>
+				<value>be.jtrackteamviewerplugin.business.bean.Partner</value>
+				<value>be.jtrackteamviewerplugin.business.bean.TeamViewerMode</value>
+				<value>be.jtrackteamviewerplugin.business.bean.TeamViewerQuality</value>
+				<value>be.jtrackteamviewerplugin.business.bean.TeamViewerConnection</value>
+				<value>be.jtrackteamviewerplugin.business.bean.TeamViewerConnectionMetaData</value>
+				<value>be.jtrackteamviewerplugin.business.bean.CustomField</value>
+			</list>
+		</property>
+    </bean>
+    <!-- ORM Annotation  -->
+    <bean id="partnerDAOImpl" class="be.jtrackteamviewerplugin.business.data.PartnerDAOImpl">
+    	<constructor-arg ref="sessionFactory"/>
+ 	</bean>
+ 	<bean id="customFieldDAOImpl" class="be.jtrackteamviewerplugin.business.data.CustomFieldDAOImpl">
+    	<constructor-arg ref="sessionFactory"/>
+ 	</bean>
+ 	<bean id="teamViewerModeDAOImpl" class="be.jtrackteamviewerplugin.business.data.TeamViewerModeDAOImpl">
+    	<constructor-arg ref="sessionFactory"/>
+ 	</bean>
+ 	<bean id="teamViewerQualityDAOImpl" class="be.jtrackteamviewerplugin.business.data.TeamViewerQualityDAOImpl">
+    	<constructor-arg ref="sessionFactory"/>
+ 	</bean>
+    <bean id="teamViewerDAOImpl" class="be.jtrackteamviewerplugin.business.data.TeamViewerDAOImpl">
+    	<constructor-arg ref="sessionFactory"/>
+    	<property name="partnerDAOImpl" ref="partnerDAOImpl"></property>
+    	<property name="teamViewerModeDAOImpl" ref="teamViewerModeDAOImpl"></property>
+    	<property name="teamViewerQualityDAOImpl" ref="teamViewerQualityDAOImpl"></property>
+ 	</bean>
+ 	 <bean id="teamViewerConnectionDAOImpl" class="be.jtrackteamviewerplugin.business.data.TeamViewerConnectionDAOImpl">
+    	<constructor-arg ref="sessionFactory"/>
+    	<property name="teamViewerDAOImpl" ref="teamViewerDAOImpl"></property>
+ 	</bean>
+ 	 <bean id="teamViewerConnectionMetaDataDAOImpl" class="be.jtrackteamviewerplugin.business.data.TeamViewerConnectionMetaDataDAOImpl">
+    	<constructor-arg ref="sessionFactory"/>
+    	<property name="customFieldDAOImpl" ref="customFieldDAOImpl"/>
+    	<property name="teamViewerConnectionDAOImpl" ref="teamViewerConnectionDAOImpl"/>
+ 	</bean>
+</beans>
