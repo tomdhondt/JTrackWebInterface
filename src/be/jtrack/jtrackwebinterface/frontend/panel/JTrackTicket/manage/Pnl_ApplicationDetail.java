@@ -8,7 +8,9 @@ import java.util.Map;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import main.java.info.jtrac.domain.Metadata;
 import main.java.info.jtrac.exception.manager.ManagerException;
+import main.java.info.jtrac.service.dto.MetadataDTO;
 import main.java.info.jtrac.service.dto.SpaceDTO;
 import main.java.info.jtrac.service.manager.IManager;
 import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
@@ -39,7 +41,8 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	/*
 	 * Instance members
 	 */
-	ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContent.xml"});	
+	ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContent.xml"});
+	MetadataDTO defaultMetaDataDTO = (MetadataDTO) context.getBean("defaultMetaDataDTO");
 	IManager<SpaceDTO> iSpaceManager = (IManager<SpaceDTO>) context.getBean("iSpaceManager");
 	/* Label */
 	private Label lbl_Space_Details;
@@ -138,10 +141,11 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 						Notification.show(e.getMessage());
 					}
 				}else{
-					try {
+					try {						
 						iSpaceManager.persist(getSpaceDTO());
 					} catch (ManagerException e) {
 						Notification.show(e.getMessage());
+						System.out.println(e.getMessage());
 					}	
 				}
 				Notification.show(captions.getString("CAP.DESC.8"));
@@ -231,5 +235,6 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 		dto.setName(this.txt_Space_DisplayName.getValue());
 		dto.setPrefixCode(this.txt_Space_SpaceKey.getValue());	
 		return dto;
-	}	
+	}
+
 }
