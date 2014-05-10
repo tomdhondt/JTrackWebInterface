@@ -3,7 +3,18 @@ package be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.manage;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import main.java.info.jtrac.dao.IPersistenceDAOImpl;
+import main.java.info.jtrac.domain.Metadata;
 import main.java.info.jtrac.domain.Space;
+import main.java.info.jtrac.domain.SpaceSequence;
+import main.java.info.jtrac.exception.manager.ManagerException;
+import main.java.info.jtrac.service.dto.MetadataDTO;
+import main.java.info.jtrac.service.dto.SpaceDTO;
+import main.java.info.jtrac.service.dto.SpaceSequenceDTO;
+import main.java.info.jtrac.service.manager.IManager;
 
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
@@ -12,21 +23,26 @@ import com.vaadin.ui.GridLayout;
 import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
 import be.jtrack.jtrackwebinterface.util.Icon;
 
+@SuppressWarnings("unchecked")
 public class Pnl_ManageApplication extends L18NPanel{
 	/**
 	 * Serial version ID
 	 */
 	private static final long serialVersionUID = 203587219333323242L;
+	/*
+	 * Instance members
+	 */
+	ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContent.xml"});	
+	IManager<SpaceDTO> iSpaceManager = (IManager<SpaceDTO>) context.getBean("iSpaceManager");
 	/* instance members */
 	private final String abstractComponentHeight = "25px";
 	private final String abstractButtonWidht = "120px";
-	private final String abstractComponentWidht = "340px";
 	/* Button */
 	private Button btn_Next;
 	/* GridLayout */
 	private GridLayout grd_General;
 	/* data */
-	List<Space> lst_Space;
+	List<SpaceDTO> lst_SpaceDTO;
 	
 	/**
 	 * Default constructor for the Class
@@ -44,7 +60,7 @@ public class Pnl_ManageApplication extends L18NPanel{
 		this.btn_Next.setIcon(Icon.iconArrowRight);
 		/* GridLayout */
 		this.grd_General = new GridLayout(1,1);
-		this.grd_General.addComponent(new Pnl_ApplicationOverview(),0,0);
+		this.grd_General.addComponent(new Pnl_ApplicationOverview(this.lst_SpaceDTO),0,0);
 //		this.grd_General.addComponent(this.btn_Next,0,1);
 		this.grd_General.setHeight("100%");
 		this.grd_General.setWidth("100%");
@@ -56,6 +72,10 @@ public class Pnl_ManageApplication extends L18NPanel{
 	 * Method will init the data needed in the frontend
 	 */
 	private void initData(){
-		this.lst_Space = new ArrayList<Space>();
+		try {
+			this.lst_SpaceDTO = this.iSpaceManager.findAll();
+		} catch (ManagerException e) {
+			this.lst_SpaceDTO = new ArrayList<SpaceDTO>();
+		}
 	}
 }

@@ -23,5 +23,6 @@ public abstract class Icon {
 	public static final FileResource iconRedo = ResourceUtil.getFileResource("/VAADIN/themes/icons/png/redo.png");
 	public static final FileResource iconArrowRight = ResourceUtil.getFileResource("/VAADIN/themes/icons/png/arrow_right.png");
 	public static final FileResource iconDisable = ResourceUtil.getFileResource("/VAADIN/themes/icons/png/disable.png");
+	public static final FileResource iconClose = ResourceUtil.getFileResource("/VAADIN/themes/icons/png/door_in.png");
 	
 }

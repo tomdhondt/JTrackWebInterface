@@ -172,7 +172,7 @@ public class TopPanel extends L18NPanel {
 				wdw_BaseWindow.setModal(true);
 				wdw_BaseWindow.setContent(new Pnl_ManageApplication());
 				wdw_BaseWindow.setWidth("50%");
-				wdw_BaseWindow.setHeight("75%");
+//				wdw_BaseWindow.setHeight("75%");
 				/* show the notification window */
 				getUI().addWindow(wdw_BaseWindow);
 			}
