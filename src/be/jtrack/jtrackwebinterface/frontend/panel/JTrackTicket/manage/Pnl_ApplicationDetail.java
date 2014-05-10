@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import main.java.info.jtrac.dao.NameQueryParam;
 import main.java.info.jtrac.domain.Metadata;
 import main.java.info.jtrac.exception.manager.ManagerException;
 import main.java.info.jtrac.service.dto.MetadataDTO;
@@ -44,6 +45,7 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContent.xml"});
 	MetadataDTO defaultMetaDataDTO = (MetadataDTO) context.getBean("defaultMetaDataDTO");
 	IManager<SpaceDTO> iSpaceManager = (IManager<SpaceDTO>) context.getBean("iSpaceManager");
+	IManager<MetadataDTO> iMetadataManager = (IManager<MetadataDTO>) context.getBean("iMetadataManager");
 	/* Label */
 	private Label lbl_Space_Details;
 	private Label lbl_Space_DisplayName;
@@ -65,9 +67,10 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	private Button btn_Save;
 	/* GridLayout */
 	private GridLayout grd_General;
-	/* List */
+	/* data */
 	private List<SpaceDTO> lst_SpaceDTO;
 	private Map<Item, SpaceDTO> map_ItemSpaceDTO;
+	private MetadataDTO dto_Metadata;
 	/* Window */
 	private Window win_ParentWindow;
 	/**
@@ -135,20 +138,25 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if(null != lbl_SpaceDTO_Id.getValue() && 0 != lbl_SpaceDTO_Id.getValue().length()){
-					try {
-						iSpaceManager.update(getSpaceDTO());
-					} catch (ManagerException e) {
-						Notification.show(e.getMessage());
+					if(persistDefaultMetadataDTO()){
+						try {
+							iSpaceManager.update(getSpaceDTO());
+						} catch (ManagerException e) {
+							Notification.show(e.getMessage());
+						}
+					}else{
+						try {
+							SpaceDTO dto_Space = getSpaceDTO();
+							dto_Space.setMd_Id(dto_Metadata.getId());
+							iSpaceManager.persist(dto_Space);
+						} catch (ManagerException e) {
+							Notification.show(e.getMessage());
+						}	
 					}
+					Notification.show(captions.getString("CAP.DESC.8"));
 				}else{
-					try {						
-						iSpaceManager.persist(getSpaceDTO());
-					} catch (ManagerException e) {
-						Notification.show(e.getMessage());
-						System.out.println(e.getMessage());
-					}	
+					Notification.show(captions.getString("CAP.DESC.19"));
 				}
-				Notification.show(captions.getString("CAP.DESC.8"));
 				win_ParentWindow.close();
 			}
 		});
@@ -236,5 +244,26 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 		dto.setPrefixCode(this.txt_Space_SpaceKey.getValue());	
 		return dto;
 	}
-
+	/*
+	 * Method will persist the and create a default MetadataDTO object
+	 */
+	private boolean persistDefaultMetadataDTO(){
+		boolean success = true; 
+		try {
+			this.iMetadataManager.persist(this.defaultMetaDataDTO);
+		} catch (ManagerException e) {
+			success = false;
+		}
+		try {
+			List<NameQueryParam> list = new ArrayList<NameQueryParam>();
+			list.add(new NameQueryParam(1,"name",defaultMetaDataDTO.getName()));
+			List<MetadataDTO> listResult = this.iMetadataManager.findByCriteria(list, "findByName");
+			if(null != listResult && listResult.size() > 0){
+				this.dto_Metadata = listResult.get(listResult.size()-1);
+			}
+		} catch (ManagerException e) {
+			success = false;
+		}
+		return success;
+	}
 }
