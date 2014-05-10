@@ -1,14 +1,11 @@
 package be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.manage;
 
-import java.util.List;
-
-import main.java.info.jtrac.service.dto.UserDTO;
-import main.java.info.jtrac.util.MappingUtil;
-
-import com.google.gwt.user.client.ui.CheckBox;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -24,7 +21,6 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 	/* instance members */
 	private final String abstractComponentHeight = "25px";
 	private final String abstractButtonWidht = "120px";
-	private final String abstractComponentWidht = "340px";
 	/* data */
 //	private List<SpaceDTO> lst_Space;
 	/* Label */
@@ -35,7 +31,6 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 	private GridLayout grd_General;
 	/* Button */
 	private Button btn_New;
-	private Button btn_Disable;
 	/**
 	 * Default constructor for the Class
 	 */
@@ -48,21 +43,25 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 	private void init(){
 		/* Label */
 		this.lbl_Title = new Label(captions.getString("CAP.LBL.22"));
+		this.lbl_Title.setStyleName("header"); 
 		/* Button */
 		this.btn_New = new Button(captions.getString("CAP.BTN.3"));
-		this.btn_Disable = new Button(captions.getString("CAP.BTN.7"));
-		this.btn_New.setHeight(this.abstractComponentHeight);
-		this.btn_Disable.setHeight(this.abstractComponentHeight);
 		this.btn_New.setWidth(this.abstractButtonWidht);
-		this.btn_Disable.setWidth(this.abstractButtonWidht);
 		this.btn_New.setIcon(Icon.iconNew);
-		this.btn_Disable.setIcon(Icon.iconDisable);
+		this.btn_New.setHeight(this.abstractComponentHeight);
 		/* Table */
 		this.tbl_ApplicationOverview = createTable();
 		/* GridLayout */
-		this.grd_General = new GridLayout(3,3);
-		
-		
+		this.grd_General = new GridLayout(3,4);
+		this.grd_General.addComponent(this.lbl_Title,0,0,2,0);
+		this.grd_General.addComponent(this.tbl_ApplicationOverview,0,1,2,2);
+		this.grd_General.addComponent(this.btn_New,2,3,2,3);
+		this.grd_General.setComponentAlignment(this.btn_New, Alignment.BOTTOM_RIGHT);
+		this.grd_General.setHeight("100%");
+		this.grd_General.setWidth("100%");
+		this.grd_General.setSizeFull();
+		this.grd_General.setMargin(new MarginInfo(true, true, true, true));
+		this.setContent(this.grd_General);
 	}
 	private Table createTable(){
 		Table table = new Table();
@@ -75,6 +74,7 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 		table.addContainerProperty(captions.getString("CAP.TBL.16"), String.class,null);
 		table.addContainerProperty(captions.getString("CAP.TBL.17"), String.class,null);
 		table.addContainerProperty(captions.getString("CAP.TBL.18"), CheckBox.class,null);
+		table.addContainerProperty(captions.getString("CAP.TBL.19"), Button.class,null);
 		table.addItemClickListener(new ItemClickListener(){
 			/**
 			 * Serial Version ID

@@ -6829,7 +6829,11 @@ body .reindeer.v-app .v-app-loading {
 	border-top-color: #7c8a90;
 	border-bottom-color: #a1b3bc;
 }
-
+.v-label-header{
+	height: 30px;
+	font-weight:bold;
+	font-size: 18px;
+}
 .reindeer .v-textfield, .reindeer .v-textarea, .reindeer .white .v-textfield, .reindeer .white .v-textarea {
 	border: 1px solid #bcbdbe;
 	border-top-color: #a2a3a4;

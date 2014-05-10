@@ -1,5 +1,10 @@
 package be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.manage;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import main.java.info.jtrac.domain.Space;
+
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
@@ -20,6 +25,9 @@ public class Pnl_ManageApplication extends L18NPanel{
 	private Button btn_Next;
 	/* GridLayout */
 	private GridLayout grd_General;
+	/* data */
+	List<Space> lst_Space;
+	
 	/**
 	 * Default constructor for the Class
 	 */
@@ -27,18 +35,27 @@ public class Pnl_ManageApplication extends L18NPanel{
 		init();
 	}
 	private void init(){
+		/* Data */
+		this.initData();
 		/* Button */
 		this.btn_Next = new Button(captions.getString("CAP.BTN.6"));
 		this.btn_Next.setHeight(this.abstractComponentHeight);
 		this.btn_Next.setWidth(this.abstractButtonWidht);
 		this.btn_Next.setIcon(Icon.iconArrowRight);
 		/* GridLayout */
-		this.grd_General = new GridLayout(1,2);
+		this.grd_General = new GridLayout(1,1);
 		this.grd_General.addComponent(new Pnl_ApplicationOverview(),0,0);
-		this.grd_General.addComponent(this.btn_Next,0,1);
+//		this.grd_General.addComponent(this.btn_Next,0,1);
+		this.grd_General.setHeight("100%");
+		this.grd_General.setWidth("100%");
 		this.grd_General.setSizeFull();
-		this.grd_General.setMargin(new MarginInfo(true, true, false, true));
+		this.grd_General.setMargin(new MarginInfo(false, false, false, false));
 		this.setContent(this.grd_General);
 	}
-	
+	/*
+	 * Method will init the data needed in the frontend
+	 */
+	private void initData(){
+		this.lst_Space = new ArrayList<Space>();
+	}
 }
