@@ -79,17 +79,7 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 			private static final long serialVersionUID = -7899291233506208783L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Notification.show("id : " + event.getComponent().getParent().getParent().getId());
-				Pnl_ApplicationOverview overview = (Pnl_ApplicationOverview) event.getComponent().getParent().getParent();
-				System.out.println("hier");
-				wdw_BaseWindow = new Window(captions.getString("CAP.PNL.4"));
-				wdw_BaseWindow.setClosable(false);
-				wdw_BaseWindow.setResizable(false);
-				wdw_BaseWindow.setModal(true);
-				wdw_BaseWindow.setContent(new Pnl_ApplicationDetail(overview, lst_SpaceDTO, wdw_BaseWindow));
-				wdw_BaseWindow.setWidth("50%");
-				/* show the notification window */
-				getUI().addWindow(wdw_BaseWindow);
+				getUI().addWindow(createApplicationDetailWindow(null));
 			}
 		});
 		/* Table */
@@ -147,7 +137,8 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 			private static final long serialVersionUID = -7899291233506208783L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Notification.show("SpaceDTO = " + event.getButton().getId());
+				/* get the selected Window */
+				getUI().addWindow(createApplicationDetailWindow(map_IdSpaceDTO.get(event.getButton().getId())));
 			}
 		});
 		return button;
@@ -167,12 +158,22 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 		if(null!= dto){
 			this.lst_SpaceDTO.add(dto);
 		}
-		for(SpaceDTO sDTO : this.lst_SpaceDTO){
-			System.out.println(sDTO);
-		}
 		Table table = createTable();
 		init_tbl_ApplicationOverview(table);
 		this.grd_General.replaceComponent(this.tbl_ApplicationOverview,	table);
 		this.tbl_ApplicationOverview = table;
+	}
+	/*
+	 * Method will create a window to set the SpaceDTO
+	 */
+	private Window createApplicationDetailWindow(SpaceDTO dto){
+		Pnl_ApplicationOverview overview = (Pnl_ApplicationOverview) this.grd_General.getParent();
+		wdw_BaseWindow = new Window(captions.getString("CAP.PNL.4"));
+		wdw_BaseWindow.setClosable(false);
+		wdw_BaseWindow.setResizable(false);
+		wdw_BaseWindow.setModal(true);
+		wdw_BaseWindow.setContent(new Pnl_ApplicationDetail(overview, lst_SpaceDTO, wdw_BaseWindow, dto));
+		wdw_BaseWindow.setWidth("50%");
+		return wdw_BaseWindow;
 	}
 }

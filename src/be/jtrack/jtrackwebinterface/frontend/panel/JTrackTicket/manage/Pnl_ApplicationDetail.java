@@ -70,6 +70,7 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	private List<SpaceDTO> lst_SpaceDTO;
 	private Map<Item, SpaceDTO> map_ItemSpaceDTO;
 	private MetadataDTO dto_Metadata;
+	private SpaceDTO obj_SpaceDTO;
 	/* Window */
 	private Window win_ParentWindow;
 	/* Panel */
@@ -86,12 +87,14 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	 * Constructor for the Class
 	 * @param listSpaceDTO as List<SpaceDTO>
 	 */
-	public Pnl_ApplicationDetail(Pnl_ApplicationOverview pnl, List<SpaceDTO> listSpaceDTO, Window window){
+	public Pnl_ApplicationDetail(Pnl_ApplicationOverview pnl, List<SpaceDTO> listSpaceDTO, Window window, SpaceDTO dto){
 		this();
 		this.pnl_Parent = pnl;
 		this.lst_SpaceDTO = listSpaceDTO;
 		this.initComboBoxSpaceDTO();
 		this.win_ParentWindow = window;
+		this.obj_SpaceDTO = dto;
+		this.initFields();
 	}
 	/*
 	 * Method will initialize the panel
@@ -285,5 +288,17 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 			success = false;
 		}
 		return success;
+	}
+	/*
+	 * Method will init the fields when editing a value
+	 */
+	private void initFields() {
+		if(null != this.obj_SpaceDTO){
+			this.lbl_SpaceDTO_Id.setValue(obj_SpaceDTO.getId());
+			this.txt_Space_Description.setValue(obj_SpaceDTO.getDescription());
+			this.txt_Space_DisplayName.setValue(obj_SpaceDTO.getName());
+			this.txt_Space_SpaceKey.setValue(obj_SpaceDTO.getPrefixCode());
+			this.chb_GuestAllowed.setValue(obj_SpaceDTO.isGuestAllowed());
+		}
 	}
 }
