@@ -19,6 +19,7 @@ import main.java.info.jtrac.service.manager.IManager;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Window;
 
 import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
 import be.jtrack.jtrackwebinterface.util.Icon;
@@ -43,11 +44,19 @@ public class Pnl_ManageApplication extends L18NPanel{
 	private GridLayout grd_General;
 	/* data */
 	List<SpaceDTO> lst_SpaceDTO;
-	
+	/* Window */
+	private Window win_BaseWindow;
+//	/**
+//	 * Default constructor for the Class
+//	 */
+//	public Pnl_ManageApplication(){
+//		init();
+//	}
 	/**
 	 * Default constructor for the Class
 	 */
-	public Pnl_ManageApplication(){
+	public Pnl_ManageApplication(Window window){
+		this.win_BaseWindow = window;
 		init();
 	}
 	private void init(){
@@ -60,7 +69,7 @@ public class Pnl_ManageApplication extends L18NPanel{
 		this.btn_Next.setIcon(Icon.iconArrowRight);
 		/* GridLayout */
 		this.grd_General = new GridLayout(1,1);
-		this.grd_General.addComponent(new Pnl_ApplicationOverview(this.lst_SpaceDTO),0,0);
+		this.grd_General.addComponent(new Pnl_ApplicationOverview(this.lst_SpaceDTO,this.win_BaseWindow),0,0);
 //		this.grd_General.addComponent(this.btn_Next,0,1);
 		this.grd_General.setHeight("100%");
 		this.grd_General.setWidth("100%");

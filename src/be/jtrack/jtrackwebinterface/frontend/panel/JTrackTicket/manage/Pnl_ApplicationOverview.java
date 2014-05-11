@@ -38,24 +38,25 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 	private GridLayout grd_General;
 	/* Button */
 	private Button btn_New;
+	private Button btn_Close;
 	/* data */
 	private List<SpaceDTO> lst_SpaceDTO;
 	private Map<String, SpaceDTO> map_IdSpaceDTO;
 	/* Window */
-	private Window wdw_BaseWindow;
+	private Window win_BaseWindow;
 	/**
 	 * Default constructor for the Class
 	 */
 	public Pnl_ApplicationOverview(){
 		this.init();
-		this.setId("01");
 		lst_SpaceDTO = new ArrayList<SpaceDTO>();
 	}
-	public Pnl_ApplicationOverview(List<SpaceDTO> listSpaceDTO){
+	public Pnl_ApplicationOverview(List<SpaceDTO> listSpaceDTO, Window win){
 		this();
 		this.lst_SpaceDTO = listSpaceDTO;
-		this.setId("01");
+		this.win_BaseWindow = win;
 		this.init_tbl_ApplicationOverview(this.tbl_ApplicationOverview);
+		
 	}
 	/*
 	 * Method will initialize the Panel
@@ -67,6 +68,20 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 		this.lbl_Title = new Label(captions.getString("CAP.LBL.22"));
 		this.lbl_Title.setStyleName("header"); 
 		/* Button */
+		this.btn_Close = new Button(captions.getString("CAP.BTN.9"));
+		this.btn_Close.setWidth(this.abstractButtonWidht);
+		this.btn_Close.setIcon(Icon.iconClose);
+		this.btn_Close.setHeight(this.abstractComponentHeight);
+		this.btn_Close.addClickListener(new Button.ClickListener() {
+			/**
+			 * Serial Version iD
+			 */
+			private static final long serialVersionUID = -7899291233506208783L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				win_BaseWindow.close();
+			}
+		});
 		this.btn_New = new Button(captions.getString("CAP.BTN.3"));
 		this.btn_New.setWidth(this.abstractButtonWidht);
 		this.btn_New.setIcon(Icon.iconNew);
@@ -87,8 +102,10 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 		this.grd_General = new GridLayout(3,4);
 		this.grd_General.addComponent(this.lbl_Title,0,0,2,0);
 		this.grd_General.addComponent(this.tbl_ApplicationOverview,0,1,2,2);
-		this.grd_General.addComponent(this.btn_New,2,3,2,3);
-		this.grd_General.setComponentAlignment(this.btn_New, Alignment.BOTTOM_RIGHT);
+		this.grd_General.addComponent(this.btn_New,0,3,0,3);
+		this.grd_General.addComponent(this.btn_Close,2,3,2,3);
+		this.grd_General.setComponentAlignment(this.btn_New, Alignment.BOTTOM_LEFT);
+		this.grd_General.setComponentAlignment(this.btn_Close, Alignment.BOTTOM_RIGHT);
 		this.grd_General.setHeight("100%");
 		this.grd_General.setWidth("100%");
 		this.grd_General.setSizeFull();
@@ -119,7 +136,7 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 		int counter = 0;
 		for(SpaceDTO spaceDTO : this.lst_SpaceDTO){
 			this.map_IdSpaceDTO.put(spaceDTO.getId(), spaceDTO);
-			Object child = table.addItem(new Object[] {++counter, spaceDTO.getName(),spaceDTO.getPrefixCode(), spaceDTO.getDescription(), this.createEnableCheckBox(spaceDTO), this.createEditButton(spaceDTO)}, null);
+			table.addItem(new Object[] {++counter, spaceDTO.getName(),spaceDTO.getPrefixCode(), spaceDTO.getDescription(), this.createEnableCheckBox(spaceDTO), this.createEditButton(spaceDTO)}, null);
 		}
 	}
 	/*
@@ -167,7 +184,7 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 	 */
 	private Window createApplicationDetailWindow(SpaceDTO dto){
 		Pnl_ApplicationOverview overview = (Pnl_ApplicationOverview) this.grd_General.getParent();
-		wdw_BaseWindow = new Window(captions.getString("CAP.PNL.4"));
+		Window wdw_BaseWindow = new Window(captions.getString("CAP.PNL.4"));
 		wdw_BaseWindow.setClosable(false);
 		wdw_BaseWindow.setResizable(false);
 		wdw_BaseWindow.setModal(true);
