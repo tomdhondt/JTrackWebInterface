@@ -130,7 +130,7 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 		int counter = 0;
 		for(SpaceDTO spaceDTO : this.lst_SpaceDTO){
 			this.map_IdSpaceDTO.put(spaceDTO.getId(), spaceDTO);
-			Object child = table.addItem(new Object[] {++counter, spaceDTO.getName(),spaceDTO.getPrefixCode(), spaceDTO.getDescription(), new CheckBox(), this.createEditButton(spaceDTO)}, null);
+			Object child = table.addItem(new Object[] {++counter, spaceDTO.getName(),spaceDTO.getPrefixCode(), spaceDTO.getDescription(), this.createEnableCheckBox(spaceDTO), this.createEditButton(spaceDTO)}, null);
 		}
 	}
 	/*
@@ -151,6 +151,14 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 			}
 		});
 		return button;
+	}
+	/*
+	 * Method will set the CheckBox enable for the SpaceDTO
+	 */
+	private CheckBox createEnableCheckBox(SpaceDTO dto){
+		CheckBox chb_Enable = new CheckBox();
+		chb_Enable.setValue(dto.isGuestAllowed());
+		return chb_Enable;
 	}
 	/**
 	 * Method will refresh the table in the Panel

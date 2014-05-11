@@ -259,7 +259,8 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 		}
 		dto.setDescription(txt_Space_Description.getValue());
 		dto.setName(this.txt_Space_DisplayName.getValue());
-		dto.setPrefixCode(this.txt_Space_SpaceKey.getValue());	
+		dto.setPrefixCode(this.txt_Space_SpaceKey.getValue());
+		dto.setGuestAllowed(this.chb_GuestAllowed.getValue());
 		return dto;
 	}
 	/*
