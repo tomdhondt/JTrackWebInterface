@@ -152,6 +152,7 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 					if(null != lbl_SpaceDTO_Id.getValue() && 0 < lbl_SpaceDTO_Id.getValue().length()){
 						try {
 							iSpaceManager.update(getSpaceDTO());
+							pnl_Parent.refreshTable(null);
 						} catch (ManagerException e) {
 							Notification.show(e.getMessage());
 						}
@@ -254,11 +255,7 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 			dto = new SpaceDTO();
 		}else{
 			/* get the object out the map and update the values */
-			for(SpaceDTO d : lst_SpaceDTO){
-				if(lbl_SpaceDTO_Id.getValue().equals(d.getId())){
-					dto = d;
-				}
-			}
+			dto = this.obj_SpaceDTO;
 		}
 		dto.setDescription(txt_Space_Description.getValue());
 		dto.setName(this.txt_Space_DisplayName.getValue());
