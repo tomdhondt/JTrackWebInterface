@@ -94,7 +94,7 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 		this.initComboBoxSpaceDTO();
 		this.win_ParentWindow = window;
 		this.obj_SpaceDTO = dto;
-		this.initFields();
+		this.initFields(this.obj_SpaceDTO);
 	}
 	/*
 	 * Method will initialize the panel
@@ -118,8 +118,10 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 			private static final long serialVersionUID = -7899291233506208783L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				SpaceDTO dto = map_ItemSpaceDTO.get(cmb_Spaces.getValue());
-				Notification.show(dto.getDescription());
+				SpaceDTO dto = map_ItemSpaceDTO.get(cmb_Spaces.getItem(cmb_Spaces.getValue()));
+				initFields(dto);
+				txt_Space_DisplayName.setValue("");
+				cmb_Spaces.setValue(null);
 			}
 		});
 		this.btn_Close = new Button(captions.getString("CAP.BTN.9"));
@@ -289,13 +291,13 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	/*
 	 * Method will init the fields when editing a value
 	 */
-	private void initFields() {
-		if(null != this.obj_SpaceDTO){
-			this.lbl_SpaceDTO_Id.setValue(obj_SpaceDTO.getId());
-			this.txt_Space_Description.setValue(obj_SpaceDTO.getDescription());
-			this.txt_Space_DisplayName.setValue(obj_SpaceDTO.getName());
-			this.txt_Space_SpaceKey.setValue(obj_SpaceDTO.getPrefixCode());
-			this.chb_GuestAllowed.setValue(obj_SpaceDTO.isGuestAllowed());
+	private void initFields(SpaceDTO dto) {
+		if(null != dto){
+			this.lbl_SpaceDTO_Id.setValue(dto.getId());
+			this.txt_Space_Description.setValue(dto.getDescription());
+			this.txt_Space_DisplayName.setValue(dto.getName());
+			this.txt_Space_SpaceKey.setValue(dto.getPrefixCode());
+			this.chb_GuestAllowed.setValue(dto.isGuestAllowed());
 		}
 	}
 }
