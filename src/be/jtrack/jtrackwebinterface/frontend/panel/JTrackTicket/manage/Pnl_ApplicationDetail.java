@@ -73,10 +73,13 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	private MetadataDTO dto_Metadata;
 	/* Window */
 	private Window win_ParentWindow;
+	/* Panel */
+	private Pnl_ManageApplication pnl_base;
 	/**
 	 * Default constructor for the Class
 	 */
 	public Pnl_ApplicationDetail(){
+//		this.pnl_base = pnl;
 		this.init();
 	}
 	/**
@@ -84,7 +87,7 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	 * @param listSpaceDTO as List<SpaceDTO>
 	 */
 	public Pnl_ApplicationDetail(List<SpaceDTO> listSpaceDTO, Window window){
-		this();
+//		this(pnl);
 		this.lst_SpaceDTO = listSpaceDTO;
 		this.initComboBoxSpaceDTO();
 		this.win_ParentWindow = window;
@@ -137,8 +140,9 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 			private static final long serialVersionUID = -7899291233506208783L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if(null != lbl_SpaceDTO_Id.getValue() && 0 != lbl_SpaceDTO_Id.getValue().length()){
-					if(persistDefaultMetadataDTO()){
+				System.out.println( lbl_SpaceDTO_Id.getValue());
+				if(persistDefaultMetadataDTO()){
+					if(null != lbl_SpaceDTO_Id.getValue() && 0 < lbl_SpaceDTO_Id.getValue().length()){
 						try {
 							iSpaceManager.update(getSpaceDTO());
 						} catch (ManagerException e) {
@@ -149,15 +153,24 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 							SpaceDTO dto_Space = getSpaceDTO();
 							dto_Space.setMd_Id(dto_Metadata.getId());
 							iSpaceManager.persist(dto_Space);
+							/* get the object out the database */
+							List<NameQueryParam> list = new ArrayList<NameQueryParam>();
+							list.add(new NameQueryParam(1,"name",defaultMetaDataDTO.getName()));
+							List<SpaceDTO> listResult = iSpaceManager.findByCriteria(list, "Space_findByName");
+							if(null != listResult && listResult.size() > 0){
+								if( null != listResult.get(listResult.size()-1)){
+									lst_SpaceDTO.add(listResult.get(listResult.size()-1));
+								}
+							}
 						} catch (ManagerException e) {
 							Notification.show(e.getMessage());
-						}	
+						}
 					}
 					Notification.show(captions.getString("CAP.DESC.8"));
+					win_ParentWindow.close();
 				}else{
 					Notification.show(captions.getString("CAP.DESC.19"));
 				}
-				win_ParentWindow.close();
 			}
 		});
 		/* ComboBox */
@@ -250,6 +263,7 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	private boolean persistDefaultMetadataDTO(){
 		boolean success = true; 
 		try {
+			this.defaultMetaDataDTO.setXmlString("<metadata><fields></fields></metadata>");
 			this.iMetadataManager.persist(this.defaultMetaDataDTO);
 		} catch (ManagerException e) {
 			success = false;

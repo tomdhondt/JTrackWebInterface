@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import main.java.info.jtrac.service.dto.SpaceDTO;
+
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -54,6 +57,7 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 	public Pnl_ApplicationOverview(List<SpaceDTO> listSpaceDTO){
 		this();
 		this.lst_SpaceDTO = listSpaceDTO;
+		this.setId("01");
 		this.init_tbl_ApplicationOverview(this.tbl_ApplicationOverview);
 	}
 	/*
@@ -70,23 +74,6 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 		this.btn_New.setWidth(this.abstractButtonWidht);
 		this.btn_New.setIcon(Icon.iconNew);
 		this.btn_New.setHeight(this.abstractComponentHeight);
-		this.btn_New.addClickListener(new Button.ClickListener() {
-			/**
-			 * Serial Version iD
-			 */
-			private static final long serialVersionUID = -7899291233506208783L;
-			@Override
-			public void buttonClick(ClickEvent event) {
-				wdw_BaseWindow = new Window(captions.getString("CAP.PNL.4"));
-				wdw_BaseWindow.setClosable(false);
-				wdw_BaseWindow.setResizable(false);
-				wdw_BaseWindow.setModal(true);
-				wdw_BaseWindow.setContent(new Pnl_ApplicationDetail(lst_SpaceDTO, wdw_BaseWindow));
-				wdw_BaseWindow.setWidth("50%");
-				/* show the notification window */
-				getUI().addWindow(wdw_BaseWindow);
-			}
-		});
 		/* Table */
 		this.tbl_ApplicationOverview = createTable();
 		/* GridLayout */
