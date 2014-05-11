@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import main.java.info.jtrac.service.dto.SpaceDTO;
 
 import com.vaadin.shared.ui.MarginInfo;
@@ -74,6 +72,26 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 		this.btn_New.setWidth(this.abstractButtonWidht);
 		this.btn_New.setIcon(Icon.iconNew);
 		this.btn_New.setHeight(this.abstractComponentHeight);
+		this.btn_New.addClickListener(new Button.ClickListener() {
+			/**
+			 * Serial Version iD
+			 */
+			private static final long serialVersionUID = -7899291233506208783L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Notification.show("id : " + event.getComponent().getParent().getParent().getId());
+				Pnl_ApplicationOverview overview = (Pnl_ApplicationOverview) event.getComponent().getParent().getParent();
+				System.out.println("hier");
+				wdw_BaseWindow = new Window(captions.getString("CAP.PNL.4"));
+				wdw_BaseWindow.setClosable(false);
+				wdw_BaseWindow.setResizable(false);
+				wdw_BaseWindow.setModal(true);
+				wdw_BaseWindow.setContent(new Pnl_ApplicationDetail(overview, lst_SpaceDTO, wdw_BaseWindow));
+				wdw_BaseWindow.setWidth("50%");
+				/* show the notification window */
+				getUI().addWindow(wdw_BaseWindow);
+			}
+		});
 		/* Table */
 		this.tbl_ApplicationOverview = createTable();
 		/* GridLayout */
@@ -91,7 +109,7 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 	/*
 	 * Create the basic table for the view
 	 */
-	private Table createTable(){
+	public Table createTable(){
 		Table table = new Table();
 		table.setWidth("100%");
 		table.setHeight("100%");
@@ -100,7 +118,7 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 		table.addContainerProperty(captions.getString("CAP.TBL.14"), String.class,null);
 		table.addContainerProperty(captions.getString("CAP.TBL.15"), String.class,null);
 		table.addContainerProperty(captions.getString("CAP.TBL.16"), String.class,null);
-		table.addContainerProperty(captions.getString("CAP.TBL.17"), String.class,null);
+//		table.addContainerProperty(captions.getString("CAP.TBL.17"), String.class,null);
 		table.addContainerProperty(captions.getString("CAP.TBL.18"), CheckBox.class,null);
 		table.addContainerProperty(captions.getString("CAP.TBL.19"), Button.class,null);
 		return table;
@@ -109,10 +127,10 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 	 * Method will set the values in the Table
 	 */
 	private void init_tbl_ApplicationOverview(Table table) {
-		int counter = 0; 
+		int counter = 0;
 		for(SpaceDTO spaceDTO : this.lst_SpaceDTO){
 			this.map_IdSpaceDTO.put(spaceDTO.getId(), spaceDTO);
-			Object child = table.addItem(new Object[] {++counter, spaceDTO.getName(),spaceDTO.getPrefixCode(), spaceDTO.getDescription(), "", new CheckBox(), this.createEditButton(spaceDTO)}, null);
+			Object child = table.addItem(new Object[] {++counter, spaceDTO.getName(),spaceDTO.getPrefixCode(), spaceDTO.getDescription(), new CheckBox(), this.createEditButton(spaceDTO)}, null);
 		}
 	}
 	/*
@@ -134,5 +152,19 @@ public class Pnl_ApplicationOverview extends L18NPanel{
 		});
 		return button;
 	}
-	
+	/**
+	 * Method will refresh the table in the Panel
+	 */
+	public void refreshTable(SpaceDTO dto){
+		if(null!= dto){
+			this.lst_SpaceDTO.add(dto);
+		}
+		for(SpaceDTO sDTO : this.lst_SpaceDTO){
+			System.out.println(sDTO);
+		}
+		Table table = createTable();
+		init_tbl_ApplicationOverview(table);
+		this.grd_General.replaceComponent(this.tbl_ApplicationOverview,	table);
+		this.tbl_ApplicationOverview = table;
+	}
 }

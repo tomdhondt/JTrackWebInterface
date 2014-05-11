@@ -9,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import main.java.info.jtrac.dao.NameQueryParam;
-import main.java.info.jtrac.domain.Metadata;
 import main.java.info.jtrac.exception.manager.ManagerException;
 import main.java.info.jtrac.service.dto.MetadataDTO;
 import main.java.info.jtrac.service.dto.SpaceDTO;
@@ -21,11 +20,11 @@ import com.vaadin.data.Item;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Window;
@@ -74,20 +73,22 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 	/* Window */
 	private Window win_ParentWindow;
 	/* Panel */
-	private Pnl_ManageApplication pnl_base;
+	private Pnl_ApplicationOverview pnl_Parent;
+	/* CheckBox */
+	private CheckBox chb_GuestAllowed;
 	/**
 	 * Default constructor for the Class
 	 */
 	public Pnl_ApplicationDetail(){
-//		this.pnl_base = pnl;
 		this.init();
 	}
 	/**
 	 * Constructor for the Class
 	 * @param listSpaceDTO as List<SpaceDTO>
 	 */
-	public Pnl_ApplicationDetail(List<SpaceDTO> listSpaceDTO, Window window){
-//		this(pnl);
+	public Pnl_ApplicationDetail(Pnl_ApplicationOverview pnl, List<SpaceDTO> listSpaceDTO, Window window){
+		this();
+		this.pnl_Parent = pnl;
 		this.lst_SpaceDTO = listSpaceDTO;
 		this.initComboBoxSpaceDTO();
 		this.win_ParentWindow = window;
@@ -100,6 +101,9 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 		this.lst_SpaceDTO = new ArrayList<SpaceDTO>();
 		this.lbl_SpaceDTO_Id = new Label();
 		this.map_ItemSpaceDTO = new HashMap<Item, SpaceDTO>();
+		/* Checkbox */
+		this.chb_GuestAllowed = new CheckBox();
+		this.chb_GuestAllowed.setValue(true);
 		/* Button */
 		this.btn_CopySpaceDTO = new Button(captions.getString("CAP.BTN.2"));
 		this.btn_CopySpaceDTO.setWidth(this.abstractComponentWidht);
@@ -155,11 +159,12 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 							iSpaceManager.persist(dto_Space);
 							/* get the object out the database */
 							List<NameQueryParam> list = new ArrayList<NameQueryParam>();
-							list.add(new NameQueryParam(1,"name",defaultMetaDataDTO.getName()));
+							list.add(new NameQueryParam(1,"name",dto_Space.getName()));
 							List<SpaceDTO> listResult = iSpaceManager.findByCriteria(list, "Space_findByName");
+							/* refresh the table content */
 							if(null != listResult && listResult.size() > 0){
 								if( null != listResult.get(listResult.size()-1)){
-									lst_SpaceDTO.add(listResult.get(listResult.size()-1));
+									pnl_Parent.refreshTable(listResult.get(listResult.size()-1));
 								}
 							}
 						} catch (ManagerException e) {
@@ -215,7 +220,7 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 		this.grd_General.addComponent(this.txt_Space_DisplayName,1,1,1,1);
 		this.grd_General.addComponent(this.txt_Space_SpaceKey,1,2,1,2);
 		this.grd_General.addComponent(this.txt_Space_Description,1,3,1,3);
-		this.grd_General.addComponent(this.txt_Space_MakePublic,1,4,1,4);
+		this.grd_General.addComponent(this.chb_GuestAllowed,1,4,1,4);
 		this.grd_General.addComponent(this.cmb_Spaces,1,5,1,5);
 		this.grd_General.addComponent(this.btn_CopySpaceDTO,1,6,1,6);
 		this.grd_General.addComponent(this.btn_Close,0,7);
