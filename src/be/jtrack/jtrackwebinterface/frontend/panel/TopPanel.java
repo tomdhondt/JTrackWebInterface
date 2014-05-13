@@ -1,6 +1,7 @@
 package be.jtrack.jtrackwebinterface.frontend.panel;
 
 import be.jtrack.jtrackwebinterface.frontend.panel.JTrackInventory.Pnl_Inventory_PropertyType;
+import be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.dashboard.Pnl_TicketDashBoard;
 import be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.manage.Pnl_ManageApplication;
 import be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.manage.Pnl_ManageUsers;
 import be.jtrack.jtrackwebinterface.util.ResourceUtil;
@@ -49,6 +50,7 @@ public class TopPanel extends L18NPanel {
 		this.mbi_Ticket = this.mbr_Global.addItem(super.captions.getString("CAP.PNL.2"), null);
 		this.mbi_Ticket.addItem(super.captions.getString("CAP.PNL.1"), this.Ticket_ManageUsers());
 		this.mbi_Ticket.addItem(super.captions.getString("CAP.PNL.3"), this.Ticket_ManageSpace());
+		this.mbi_Ticket.addItem(super.captions.getString("CAP.PNL.4"), this.Ticket_DashBoard());
 		this.mbi_Help = this.mbr_Global.addItem(super.captions.getString("PNL_TopPanel_mbi_Help"), null);
 		this.mbi_Help.addItem(super.captions.getString("PNL_TopPanel_mbi_Help_Info"), this.MenuCommand()).setIcon(ResourceUtil.getFileResource("/VAADIN/themes/icons/png/help.png"));
 		/*  GridLayout */
@@ -171,6 +173,28 @@ public class TopPanel extends L18NPanel {
 				wdw_BaseWindow.setResizable(false);
 				wdw_BaseWindow.setModal(true);
 				wdw_BaseWindow.setContent(new Pnl_ManageApplication(wdw_BaseWindow));
+				wdw_BaseWindow.setWidth("50%");
+				/* show the notification window */
+				getUI().addWindow(wdw_BaseWindow);
+			}
+		};
+		return command;
+    }
+    private Command Ticket_DashBoard(){
+    	Command command = new Command() {
+			/**
+			 * Serial Version ID
+			 */
+			private static final long serialVersionUID = 5223585746425208885L;
+
+			@Override
+			public void menuSelected(MenuItem selectedItem) {
+				/* initialize Window to confirm deleting the connection*/
+				wdw_BaseWindow = new Window(captions.getString("CAP.PNL.3"));
+				wdw_BaseWindow.setClosable(true);
+				wdw_BaseWindow.setResizable(false);
+				wdw_BaseWindow.setModal(true);
+				wdw_BaseWindow.setContent(new Pnl_TicketDashBoard(wdw_BaseWindow));
 				wdw_BaseWindow.setWidth("50%");
 				/* show the notification window */
 				getUI().addWindow(wdw_BaseWindow);
