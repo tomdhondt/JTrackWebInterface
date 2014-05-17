@@ -1,6 +1,12 @@
 package be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.dashboard;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import main.java.info.jtrac.domain.Status;
+
 import com.google.gwt.aria.client.ComboboxRole;
+import com.vaadin.data.Item;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -44,6 +50,7 @@ public class Pnl_TicketCreate extends L18NPanel{
 	private Label lbl_AllocateTo;
 	private Label lbl_State;
 	/* data */
+	private Map<Item, Status> map_ItemStatus;
 	/* Window */
 	private Window wdw_Parent;
 	/**
@@ -65,6 +72,8 @@ public class Pnl_TicketCreate extends L18NPanel{
 	 * method will init the Panel
 	 */
 	private void init(){
+		/* data */
+		this.map_ItemStatus = new HashMap<Item, Status>();
 		/* Button */
 		this.btn_Save = new Button(captions.getString("CAP.BTN.1"));
 		this.btn_Save.setWidth(abstractButtonWidht);
@@ -91,6 +100,7 @@ public class Pnl_TicketCreate extends L18NPanel{
 		this.cmb_State = new ComboBox();
 		this.cmb_State.setWidth(abstractComponentWidht);
 		this.cmb_State.setHeight(abstractComponentHeight);
+		this.initCmbState(this.cmb_State);
 		this.cmb_AllocateTo = new ComboBox();
 		this.cmb_AllocateTo.setWidth(abstractComponentWidht);
 		this.cmb_AllocateTo.setHeight(abstractComponentHeight);
@@ -125,5 +135,17 @@ public class Pnl_TicketCreate extends L18NPanel{
 		this.grd_General.setMargin(new MarginInfo(true, true, true, true));
 		this.setContent(this.grd_General);
 	}
-
+	/*
+	 * Method will init the ComboBox For the Status
+	 * @param combo
+	 */
+	private void initCmbState(ComboBox combo){
+		if(null != combo){
+			// Clean the ComboBox
+			for(Status s : Status.values()){
+				Item item = combo.addItem(captions.getString(s.getCaption()));
+				map_ItemStatus.put(item, s);
+			}
+		}
+	}
 }
