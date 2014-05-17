@@ -50,7 +50,7 @@ public class TopPanel extends L18NPanel {
 		this.mbi_Ticket = this.mbr_Global.addItem(super.captions.getString("CAP.PNL.2"), null);
 		this.mbi_Ticket.addItem(super.captions.getString("CAP.PNL.1"), this.Ticket_ManageUsers());
 		this.mbi_Ticket.addItem(super.captions.getString("CAP.PNL.3"), this.Ticket_ManageSpace());
-		this.mbi_Ticket.addItem(super.captions.getString("CAP.PNL.4"), this.Ticket_DashBoard());
+		this.mbi_Ticket.addItem(super.captions.getString("CAP.PNL.5"), this.Ticket_DashBoard());
 		this.mbi_Help = this.mbr_Global.addItem(super.captions.getString("PNL_TopPanel_mbi_Help"), null);
 		this.mbi_Help.addItem(super.captions.getString("PNL_TopPanel_mbi_Help_Info"), this.MenuCommand()).setIcon(ResourceUtil.getFileResource("/VAADIN/themes/icons/png/help.png"));
 		/*  GridLayout */
@@ -190,7 +190,7 @@ public class TopPanel extends L18NPanel {
 			@Override
 			public void menuSelected(MenuItem selectedItem) {
 				/* initialize Window to confirm deleting the connection*/
-				wdw_BaseWindow = new Window(captions.getString("CAP.PNL.3"));
+				wdw_BaseWindow = new Window(captions.getString("CAP.PNL.5"));
 				wdw_BaseWindow.setClosable(true);
 				wdw_BaseWindow.setResizable(false);
 				wdw_BaseWindow.setModal(true);

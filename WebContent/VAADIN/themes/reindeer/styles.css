@@ -383,7 +383,21 @@
 	position: absolute;
 	width: 100%;
 }
-
+.reindeer .v-button-green{
+	background-color: #F3E73E;
+}
+.v-button.v-button-Red .v-button-wrap{
+    background: red;
+}
+.v-button.v-button-green .v-button-wrap{
+    background: green;
+}
+.v-button.v-button-yellow .v-button-wrap{
+    background: yellow;
+}
+.v-button.v-button-blue .v-button-wrap{
+    background: blue;
+}
 .reindeer .v-button {
 	display: inline-block;
 	zoom: 1;
