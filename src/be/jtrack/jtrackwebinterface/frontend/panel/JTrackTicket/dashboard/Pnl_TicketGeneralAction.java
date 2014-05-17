@@ -5,7 +5,11 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Window;
+import com.vaadin.ui.Button.ClickEvent;
 
 import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
 
@@ -18,6 +22,8 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 	 * Instance members
 	 */
 	private final String abstractTextFieldWidth = "75px";
+	/* Window */
+	private Window wdw_TicketGeneral;
 	/* GridView */
 	private GridLayout grd_General;
 	/* Label */
@@ -31,10 +37,13 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 	private TextField txt_NumberOfOpenTicket;
 	private TextField txt_NumberOfCloseTicket;
 	private TextField txt_NumberOfNewTicket;
+	/* Panel */
+	private Pnl_TicketGeneral pnl_Parent;
 	/**
 	 * Constructor for the Class
 	 */
-	public Pnl_TicketGeneralAction(){
+	public Pnl_TicketGeneralAction(Pnl_TicketGeneral parent){
+		this.pnl_Parent = parent;
 		init();
 	}
 	private void init(){
@@ -47,6 +56,24 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 		/* Button */
 		this.btn_New = new Button(captions.getString("CAP.BTN.10"));
 		this.btn_New.setWidth(this.getWidth(), this.getWidthUnits());
+		this.btn_New.addClickListener(new Button.ClickListener() {
+			/**
+			 * Serial Version iD
+			 */
+			private static final long serialVersionUID = -7899291233506208783L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				/* initialize Window to confirm deleting the connection*/
+				wdw_TicketGeneral = new Window(captions.getString("CAP.PNL.6"));
+				wdw_TicketGeneral.setClosable(false);
+				wdw_TicketGeneral.setResizable(false);
+				wdw_TicketGeneral.setModal(true);
+				wdw_TicketGeneral.setContent(new Pnl_TicketCreate(wdw_TicketGeneral));
+				wdw_TicketGeneral.setWidth("50%");
+				/* show the notification window */
+				getUI().addWindow(wdw_TicketGeneral);
+			}
+		});
 		/* TextField */
 		this.txt_NumberOfOpenTicket = new TextField();
 		this.txt_NumberOfCloseTicket = new TextField();

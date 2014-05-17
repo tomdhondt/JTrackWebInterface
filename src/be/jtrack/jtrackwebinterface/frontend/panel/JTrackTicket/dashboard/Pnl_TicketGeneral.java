@@ -4,6 +4,8 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.Window;
 
 import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
 
@@ -18,6 +20,10 @@ public class Pnl_TicketGeneral extends L18NPanel implements View{
 	 */
 	/* GridView */
 	private GridLayout grd_General;
+	/* Panel */
+	private Panel pnl_DynamicPanel;
+	/* Window */
+	private Window wdw_TicketGeneral;
 	/**
 	 * Default constructor for the Class
 	 */
@@ -28,10 +34,12 @@ public class Pnl_TicketGeneral extends L18NPanel implements View{
 	 * method will init the Panel
 	 */
 	private void init(){
+		/* Panel */
+		this.pnl_DynamicPanel = new Pnl_TicketDashBoard();
 		/* GridLayout */
 		this.grd_General = new GridLayout(2,1);
-		this.grd_General.addComponent(new Pnl_TicketGeneralAction(),0,0);
-		this.grd_General.addComponent(new Pnl_TicketDashBoard(),1,0);
+		this.grd_General.addComponent(new Pnl_TicketGeneralAction(this),0,0);
+		this.grd_General.addComponent(this.pnl_DynamicPanel,1,0);
 		this.grd_General.setColumnExpandRatio(0, 0);
 		this.grd_General.setColumnExpandRatio(1, 1);
 		this.grd_General.setHeight("100%");
