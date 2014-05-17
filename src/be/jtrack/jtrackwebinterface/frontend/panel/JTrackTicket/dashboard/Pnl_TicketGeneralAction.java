@@ -5,8 +5,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
@@ -37,13 +35,10 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 	private TextField txt_NumberOfOpenTicket;
 	private TextField txt_NumberOfCloseTicket;
 	private TextField txt_NumberOfNewTicket;
-	/* Panel */
-	private Pnl_TicketGeneral pnl_Parent;
 	/**
 	 * Constructor for the Class
 	 */
 	public Pnl_TicketGeneralAction(Pnl_TicketGeneral parent){
-		this.pnl_Parent = parent;
 		init();
 	}
 	private void init(){

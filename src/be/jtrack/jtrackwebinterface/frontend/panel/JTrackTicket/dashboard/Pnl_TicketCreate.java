@@ -5,7 +5,6 @@ import java.util.Map;
 
 import main.java.info.jtrac.domain.Status;
 
-import com.google.gwt.aria.client.ComboboxRole;
 import com.vaadin.data.Item;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;

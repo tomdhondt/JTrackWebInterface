@@ -5,8 +5,6 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.Window;
-
 import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
 
 public class Pnl_TicketGeneral extends L18NPanel implements View{
@@ -22,8 +20,6 @@ public class Pnl_TicketGeneral extends L18NPanel implements View{
 	private GridLayout grd_General;
 	/* Panel */
 	private Panel pnl_DynamicPanel;
-	/* Window */
-	private Window wdw_TicketGeneral;
 	/**
 	 * Default constructor for the Class
 	 */
