@@ -3,6 +3,7 @@ package be.jtrack.jtrackwebinterface.frontend.panel;
 import java.io.Serializable;
 
 import be.jtrack.jtrackwebinterface.frontend.panel.JTrackInventory.Pnl_JTrackInventoryView;
+import be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.dashboard.Pnl_TicketGeneral;
 import be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.manage.Pnl_Login;
 
 import com.vaadin.annotations.Theme;
@@ -54,7 +55,8 @@ public class DashboardPanel extends UI implements Serializable {
 		getNavigator().addView(Pnl_Login.VIEWNAME, Pnl_Login.class);
 		getNavigator().addView(HomePanel.VIEWNAME, HomePanel.class);
 		getNavigator().addView(SearchPanel.VIEWNAME, SearchPanel.class);
-		getNavigator().addView(Pnl_JTrackInventoryView.VIEWNAME, Pnl_Login.class);
-		getNavigator().navigateTo(Pnl_JTrackInventoryView.VIEWNAME);
+		getNavigator().addView(Pnl_JTrackInventoryView.VIEWNAME, Pnl_JTrackInventoryView.class);
+		getNavigator().addView(Pnl_TicketGeneral.VIEWNAME, Pnl_TicketGeneral.class);
+		getNavigator().navigateTo(Pnl_TicketGeneral.VIEWNAME);
 	}
 }

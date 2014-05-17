@@ -26,11 +26,10 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 	}
 	private void init(){
 		/* Label */
-		this.lbl_Title = new Label();
-		this.lbl_Title.setCaption(captions.getString("CAP.PNL.6"));
+		this.lbl_Title = new Label(captions.getString("CAP.PNL.6"));
+		this.lbl_Title.setStyleName("header"); 
 		/* Button */
 		this.btn_New = new Button(captions.getString("CAP.BTN.3"));
-		this.btn_New.setWidth(this.grd_General.getWidth(),grd_General.getWidthUnits());
 		/* GridLayout */
 		this.grd_General = new GridLayout(2,2);
 		this.grd_General.addComponent(this.lbl_Title,0,0,1,0);
@@ -41,6 +40,8 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 		this.grd_General.setSizeFull();
 		this.grd_General.setMargin(new MarginInfo(true, true, true, true));
 		this.setContent(this.grd_General);
-		
+//		this.btn_New.setWidth(this.grd_General.getWidth(),grd_General.getWidthUnits());
+		/* general */
+		this.setWidth("250px");
 	}
 }
