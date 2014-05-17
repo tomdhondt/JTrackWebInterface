@@ -144,17 +144,18 @@ public class Pnl_TicketDashBoard extends L18NPanel{
 		for(String object : this.lst_Ticket){
 			table.addItem(new Object[] {++counter, object}, null);
 		}
-//		table.setCellStyleGenerator(new Table.CellStyleGenerator() {
-//			/**
-//			 * Serial version id
-//			 */
-//			private static final long serialVersionUID = 3132626962286547998L;
-//			@Override
-//			public String getStyle(Table source, Object itemId, Object propertyId) {
-//				Item item = source.getItem(itemId);
-//				
-//				return (String) item.getItemProperty(captions.getString("CAP.TBL.19")).getValue();
-//			}
-//		});
+		table.setCellStyleGenerator(new Table.CellStyleGenerator() {
+			/**
+			 * Serial version id
+			 */
+			private static final long serialVersionUID = 3132626962286547998L;
+			@Override
+			public String getStyle(Table source, Object itemId, Object propertyId) {
+				Item item = source.getItem(itemId);
+				
+				return (String) item.getItemProperty(captions.getString("CAP.TBL.19")).getValue();
+			}
+		});
 	}
+
 }

@@ -3,9 +3,7 @@ package be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.dashboard;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
 
 import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
 
@@ -20,10 +18,6 @@ public class Pnl_TicketGeneral extends L18NPanel implements View{
 	 */
 	/* GridView */
 	private GridLayout grd_General;
-	/* Label */
-	private Label lbl_Title;
-	/* Button */
-	private Button btn_New;
 	/**
 	 * Default constructor for the Class
 	 */
@@ -38,7 +32,6 @@ public class Pnl_TicketGeneral extends L18NPanel implements View{
 		this.grd_General = new GridLayout(2,1);
 		this.grd_General.addComponent(new Pnl_TicketGeneralAction(),0,0);
 		this.grd_General.addComponent(new Pnl_TicketDashBoard(),1,0);
-//		this.grd_General.setComponentAlignment(this.btn_Close, Alignment.BOTTOM_RIGHT);
 		this.grd_General.setColumnExpandRatio(0, 0);
 		this.grd_General.setColumnExpandRatio(1, 1);
 		this.grd_General.setHeight("100%");

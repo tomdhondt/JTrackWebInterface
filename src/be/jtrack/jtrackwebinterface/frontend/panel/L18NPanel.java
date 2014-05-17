@@ -32,6 +32,8 @@ public class L18NPanel extends Panel implements Serializable {
 			captions = ResourceBundle.getBundle("Messages", locale ,loader);
 		} catch (MalformedURLException e){
 			Notification.show("Error Caption");
+		}catch(Exception e){
+			Notification.show("Error Caption");
 		}
 	}
 }

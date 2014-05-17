@@ -5470,7 +5470,14 @@ body .reindeer.v-app .v-app-loading {
 	height: 0;
 	border: none;
 }
-
+.v-panel .v-panel-content-webos-desktop {
+	
+    background-color: #333333;
+}
+.v-panel-content-webos-desktop > div {
+	background-color: #333333;
+   	background: transparent;
+}
 .reindeer .v-popupview {
 	color: #1b699f;
 }
@@ -7298,4 +7305,7 @@ body .reindeer.v-app .v-app-loading {
 	background: transparent repeat-x;
   background-image: url('common/img/black-vertical-sprites.png');
   background-position: left -693px;
+}
+v-label-desktop{
+	color:rgb(209, 211, 214);
 }
