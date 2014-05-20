@@ -19,6 +19,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
 import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
+import be.jtrack.jtrackwebinterface.util.AttachmentUploader;
 import be.jtrack.jtrackwebinterface.util.Icon;
 
 public class Pnl_TicketCreate extends L18NPanel{
@@ -77,8 +78,12 @@ public class Pnl_TicketCreate extends L18NPanel{
 	private void init(){
 		/* data */
 		this.map_ItemStatus = new HashMap<Item, Status>();
+		/* Receiver */
+		AttachmentUploader receiver = new AttachmentUploader();
 		/* Upload */
-		this.upl_Attachment = new Upload();
+		this.upl_Attachment = new Upload(null,receiver);
+		this.upl_Attachment.setButtonCaption("Start Upload");
+		this.upl_Attachment.addSucceededListener(receiver);
 		/* Button */
 		this.btn_Save = new Button(captions.getString("CAP.BTN.1"));
 		this.btn_Save.setWidth(abstractButtonWidht);
@@ -116,23 +121,27 @@ public class Pnl_TicketCreate extends L18NPanel{
 		this.lbl_TicketDescription = new Label(captions.getString("CAP.LBL.28"));
 		this.lbl_AllocateTo = new Label(captions.getString("CAP.LBL.29"));
 		this.lbl_State = new Label(captions.getString("CAP.LBL.30"));
+		this.lbl_Attachment = new Label(captions.getString("CAP.LBL.31"));
 		this.lbl_Title.setHeight(abstractComponentHeight);
 		this.lbl_TicketTitle.setHeight(abstractComponentHeight);
 		this.lbl_TicketDescription.setHeight(abstractComponentHeight);
 		this.lbl_AllocateTo.setHeight(abstractComponentHeight);
 		this.lbl_State.setHeight(abstractComponentHeight);
+		this.lbl_Attachment.setHeight(abstractComponentHeight);
 		/* GridLayout */
-		this.grd_General = new GridLayout(2,6);
+		this.grd_General = new GridLayout(2,7);
 		this.grd_General.addComponent(this.lbl_Title,0,0);
 		this.grd_General.addComponent(this.lbl_TicketTitle,0,1);
 		this.grd_General.addComponent(this.lbl_TicketDescription,0,2);
 		this.grd_General.addComponent(this.lbl_AllocateTo,0,3);
 		this.grd_General.addComponent(this.lbl_State,0,4);
+		this.grd_General.addComponent(this.lbl_Attachment,0,5);
 		this.grd_General.addComponent(this.txt_TicketTitle,1,1);
 		this.grd_General.addComponent(this.txa_TicketDescription,1,2);
 		this.grd_General.addComponent(this.cmb_AllocateTo,1,3);
 		this.grd_General.addComponent(this.cmb_State,1,4);
-		this.grd_General.addComponent(this.btn_Save,1,5);
+		this.grd_General.addComponent(this.upl_Attachment,1,5);
+		this.grd_General.addComponent(this.btn_Save,1,6);
 		this.grd_General.setComponentAlignment(this.btn_Save, Alignment.BOTTOM_RIGHT);
 		this.grd_General.setHeight("100%");
 		this.grd_General.setWidth("100%");
