@@ -14,6 +14,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -39,6 +40,8 @@ public class Pnl_TicketCreate extends L18NPanel{
 	private TextArea txa_TicketDescription;
 	/* TextField */
 	private TextField txt_TicketTitle;
+	/* FileUpload */
+	private Upload upl_Attachment;
 	/* ComboBox */
 	private ComboBox cmb_AllocateTo;
 	private ComboBox cmb_State;
@@ -48,6 +51,7 @@ public class Pnl_TicketCreate extends L18NPanel{
 	private Label lbl_TicketTitle;
 	private Label lbl_AllocateTo;
 	private Label lbl_State;
+	private Label lbl_Attachment;
 	/* data */
 	private Map<Item, Status> map_ItemStatus;
 	/* Window */
@@ -73,6 +77,8 @@ public class Pnl_TicketCreate extends L18NPanel{
 	private void init(){
 		/* data */
 		this.map_ItemStatus = new HashMap<Item, Status>();
+		/* Upload */
+		this.upl_Attachment = new Upload();
 		/* Button */
 		this.btn_Save = new Button(captions.getString("CAP.BTN.1"));
 		this.btn_Save.setWidth(abstractButtonWidht);
