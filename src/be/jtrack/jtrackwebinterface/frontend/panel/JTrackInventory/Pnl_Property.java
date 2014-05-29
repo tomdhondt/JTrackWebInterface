@@ -22,7 +22,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 
-import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 import be.jtrack.jtrackwebinterface.listner.Lsn_FocusListner_TextField_HelpText;
 import be.jtrack.jtrackwebinterface.util.Icon;
 import be.jtrackinventory.exception.manager.ManagerException;

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 import be.jtrackteamviewerplugin.service.dto.TeamViewerDTO;
 import be.jtrackteamviewerplugin.service.manager.TeamViewerManager;
 

@@ -25,10 +25,9 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.TreeTable;
 
-import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 import be.jtrack.jtrackwebinterface.listner.Lsn_FocusListner_TextField_HelpText;
 import be.jtrack.jtrackwebinterface.util.Icon;
-import be.jtrackinventory.business.bean.MaterialComponent;
 import be.jtrackinventory.exception.manager.ManagerException;
 import be.jtrackinventory.service.dto.MaterialComponentDTO;
 import be.jtrackinventory.service.dto.MaterialComponentObjectDTO;
@@ -126,6 +125,7 @@ public class Pnl_MaterialObject  extends L18NPanel{
 	/*
 	 * initialize the Class
 	 */
+	@SuppressWarnings("deprecation")
 	private void init(){
 		/* TextBox */
 		this.txt_MaterialObjectCaption = new TextField();
@@ -621,6 +621,7 @@ public class Pnl_MaterialObject  extends L18NPanel{
 		return checkPast;
 	}
 	/* method will billed the MaterialComponent TabSheet */
+	@SuppressWarnings("deprecation")
 	private void createMaterialComponentObjectTabSheet(MaterialComponentObjectDTO materialComponentObjectDTO){
 		if(null != materialComponentObjectDTO){
 			/* Create Table */

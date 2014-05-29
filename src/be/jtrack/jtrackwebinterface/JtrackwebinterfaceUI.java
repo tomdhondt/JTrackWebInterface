@@ -2,7 +2,7 @@ package be.jtrack.jtrackwebinterface;
 
 import javax.servlet.annotation.WebServlet;
 
-import be.jtrack.jtrackwebinterface.frontend.panel.DashboardPanel;
+import be.jtrack.jtrackwebinterface.frontend.panel.global.DashboardPanel;
 
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;

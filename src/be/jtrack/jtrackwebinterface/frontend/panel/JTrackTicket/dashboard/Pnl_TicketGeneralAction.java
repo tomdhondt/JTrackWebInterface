@@ -1,16 +1,27 @@
 package be.jtrack.jtrackwebinterface.frontend.panel.JTrackTicket.dashboard;
 
+import java.util.List;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import main.java.info.jtrac.exception.manager.ManagerException;
+import main.java.info.jtrac.service.dto.SpaceDTO;
+import main.java.info.jtrac.service.dto.UserDTO;
+import main.java.info.jtrac.service.manager.IManager;
+
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
-import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
-
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
+@SuppressWarnings("unchecked")
 public class Pnl_TicketGeneralAction extends L18NPanel {
 	/**
 	 * Serial version ID
@@ -19,6 +30,9 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 	/*
 	 * Instance members
 	 */
+	ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContent.xml"});
+	IManager<SpaceDTO> iSpaceManager = (IManager<SpaceDTO>) context.getBean("iSpaceManager");
+	IManager<UserDTO> iUserManager = (IManager<UserDTO>) context.getBean("iUserManager");
 	private final String abstractTextFieldWidth = "75px";
 	/* Window */
 	private Window wdw_TicketGeneral;
@@ -35,6 +49,10 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 	private TextField txt_NumberOfOpenTicket;
 	private TextField txt_NumberOfCloseTicket;
 	private TextField txt_NumberOfNewTicket;
+	/* Data */
+	private List<SpaceDTO> lst_SpaceDTO;
+	private List<UserDTO> lst_UserDTO;
+	
 	/**
 	 * Constructor for the Class
 	 */
@@ -42,6 +60,13 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 		init();
 	}
 	private void init(){
+		/* Data */
+		try {
+			this.lst_SpaceDTO = iSpaceManager.findAll();
+			this.lst_UserDTO = iUserManager.findAll();
+		} catch (ManagerException e) {
+			Notification.show(captions.getString(e.getCaption()));
+		}
 		/* Label */
 		this.lbl_Title = new Label(captions.getString("CAP.PNL.6"));
 		this.lbl_Title.setStyleName("header");
@@ -63,7 +88,7 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 				wdw_TicketGeneral.setClosable(false);
 				wdw_TicketGeneral.setResizable(false);
 				wdw_TicketGeneral.setModal(true);
-				wdw_TicketGeneral.setContent(new Pnl_TicketCreate(wdw_TicketGeneral));
+				wdw_TicketGeneral.setContent(new Pnl_TicketCreate(wdw_TicketGeneral,lst_SpaceDTO, lst_UserDTO));
 				wdw_TicketGeneral.setWidth("50%");
 				/* show the notification window */
 				getUI().addWindow(wdw_TicketGeneral);

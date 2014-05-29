@@ -6,14 +6,8 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import main.java.info.jtrac.dao.IPersistenceDAOImpl;
-import main.java.info.jtrac.domain.Metadata;
-import main.java.info.jtrac.domain.Space;
-import main.java.info.jtrac.domain.SpaceSequence;
 import main.java.info.jtrac.exception.manager.ManagerException;
-import main.java.info.jtrac.service.dto.MetadataDTO;
 import main.java.info.jtrac.service.dto.SpaceDTO;
-import main.java.info.jtrac.service.dto.SpaceSequenceDTO;
 import main.java.info.jtrac.service.manager.IManager;
 
 import com.vaadin.shared.ui.MarginInfo;
@@ -21,7 +15,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Window;
 
-import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 import be.jtrack.jtrackwebinterface.util.Icon;
 
 @SuppressWarnings("unchecked")
@@ -46,12 +40,6 @@ public class Pnl_ManageApplication extends L18NPanel{
 	List<SpaceDTO> lst_SpaceDTO;
 	/* Window */
 	private Window win_BaseWindow;
-//	/**
-//	 * Default constructor for the Class
-//	 */
-//	public Pnl_ManageApplication(){
-//		init();
-//	}
 	/**
 	 * Default constructor for the Class
 	 */
@@ -70,7 +58,6 @@ public class Pnl_ManageApplication extends L18NPanel{
 		/* GridLayout */
 		this.grd_General = new GridLayout(1,1);
 		this.grd_General.addComponent(new Pnl_ApplicationOverview(this.lst_SpaceDTO,this.win_BaseWindow),0,0);
-//		this.grd_General.addComponent(this.btn_Next,0,1);
 		this.grd_General.setHeight("100%");
 		this.grd_General.setWidth("100%");
 		this.grd_General.setSizeFull();

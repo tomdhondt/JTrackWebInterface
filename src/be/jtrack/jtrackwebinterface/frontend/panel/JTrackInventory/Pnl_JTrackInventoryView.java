@@ -29,7 +29,7 @@ import com.vaadin.event.Action;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 
-import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 import be.jtrack.jtrackwebinterface.util.BrowserUtil;
 import be.jtrack.jtrackwebinterface.util.Icon;
 import be.jtrackinventory.exception.manager.ManagerException;

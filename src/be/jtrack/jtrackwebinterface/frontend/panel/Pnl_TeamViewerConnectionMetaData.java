@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 import be.jtrack.jtrackwebinterface.util.ResourceUtil;
 import be.jtrackteamviewerplugin.business.enu.FieldDataType;
 import be.jtrackteamviewerplugin.service.dto.CustomFieldDTO;

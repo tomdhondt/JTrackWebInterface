@@ -9,6 +9,7 @@ import nl.knowlogy.validation.ValidationException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 import be.jtrack.jtrackwebinterface.util.ResourceUtil;
 import be.jtrackteamviewerplugin.business.enu.FieldDataType;
 import be.jtrackteamviewerplugin.service.dto.CustomFieldDTO;
@@ -133,7 +134,8 @@ public class Pnl_CustomField extends L18NPanel{
 						Notification.show(s.toString());
 					}
 					// Iterate over the item identifiers of the table.
-					for (Iterator i = tbl_CustomField.getItemIds().iterator(); i.hasNext();) {
+					for (
+					Iterator i = tbl_CustomField.getItemIds().iterator(); i.hasNext();) {
 					    // Get the current item identifier, which is an integer.
 					    int iid = (Integer) i.next();
 					    // Now get the actual item from the table.
@@ -144,7 +146,8 @@ public class Pnl_CustomField extends L18NPanel{
 					}
 				}else{
 					// Iterate over the item identifiers of the table.
-					for (Iterator i = tbl_CustomField.getItemIds().iterator(); i.hasNext();) {
+					for (
+						Iterator i = tbl_CustomField.getItemIds().iterator(); i.hasNext();) {
 					    // Get the current item identifier, which is an integer.
 					    int iid = (Integer) i.next();
 					    // Now get the actual item from the table.

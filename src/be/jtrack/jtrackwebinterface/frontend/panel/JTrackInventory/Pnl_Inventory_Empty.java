@@ -4,7 +4,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.GridLayout;
 
-import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 import be.jtrack.jtrackwebinterface.util.Icon;
 
 public class Pnl_Inventory_Empty extends L18NPanel {

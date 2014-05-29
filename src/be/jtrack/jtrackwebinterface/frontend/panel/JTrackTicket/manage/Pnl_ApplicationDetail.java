@@ -13,7 +13,7 @@ import main.java.info.jtrac.exception.manager.ManagerException;
 import main.java.info.jtrac.service.dto.MetadataDTO;
 import main.java.info.jtrac.service.dto.SpaceDTO;
 import main.java.info.jtrac.service.manager.IManager;
-import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 import be.jtrack.jtrackwebinterface.util.Icon;
 
 import com.vaadin.data.Item;
@@ -149,7 +149,6 @@ public class Pnl_ApplicationDetail extends L18NPanel{
 			private static final long serialVersionUID = -7899291233506208783L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				System.out.println( lbl_SpaceDTO_Id.getValue());
 				if(persistDefaultMetadataDTO()){
 					if(null != lbl_SpaceDTO_Id.getValue() && 0 < lbl_SpaceDTO_Id.getValue().length()){
 						try {

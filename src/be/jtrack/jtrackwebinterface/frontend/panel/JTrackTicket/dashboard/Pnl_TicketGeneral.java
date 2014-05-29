@@ -5,10 +5,11 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Panel;
-import be.jtrack.jtrackwebinterface.frontend.panel.L18NPanel;
+
+import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 
 public class Pnl_TicketGeneral extends L18NPanel implements View{
-	public static final String VIEWNAME = "JTrackTicketView";
+	public static final String VIEWNAME = "JTrackTicket";
 	/**
 	 * Serial version ID
 	 */
