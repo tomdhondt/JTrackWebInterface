@@ -21,6 +21,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
 import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
+import be.jtrackinventory.service.dto.MaterialObjectDTO;
 @SuppressWarnings("unchecked")
 public class Pnl_TicketGeneralAction extends L18NPanel {
 	/**
@@ -33,6 +34,7 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 	ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"applicationContent.xml"});
 	IManager<SpaceDTO> iSpaceManager = (IManager<SpaceDTO>) context.getBean("iSpaceManager");
 	IManager<UserDTO> iUserManager = (IManager<UserDTO>) context.getBean("iUserManager");
+	be.jtrackinventory.service.manager.IManager<MaterialObjectDTO> iManagerMaterialObject = (be.jtrackinventory.service.manager.IManager<MaterialObjectDTO>) context.getBean("iManagerMaterialObject");
 	private final String abstractTextFieldWidth = "75px";
 	/* Window */
 	private Window wdw_TicketGeneral;
@@ -52,7 +54,7 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 	/* Data */
 	private List<SpaceDTO> lst_SpaceDTO;
 	private List<UserDTO> lst_UserDTO;
-	
+	private List<MaterialObjectDTO> lst_MaterialObjectDTO;
 	/**
 	 * Constructor for the Class
 	 */
@@ -64,6 +66,10 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 		try {
 			this.lst_SpaceDTO = iSpaceManager.findAll();
 			this.lst_UserDTO = iUserManager.findAll();
+			try {
+				this.lst_MaterialObjectDTO = iManagerMaterialObject.findAll();
+			} catch (be.jtrackinventory.exception.manager.ManagerException e) {
+			}
 		} catch (ManagerException e) {
 			Notification.show(captions.getString(e.getCaption()));
 		}
@@ -88,7 +94,7 @@ public class Pnl_TicketGeneralAction extends L18NPanel {
 				wdw_TicketGeneral.setClosable(false);
 				wdw_TicketGeneral.setResizable(false);
 				wdw_TicketGeneral.setModal(true);
-				wdw_TicketGeneral.setContent(new Pnl_TicketCreate(wdw_TicketGeneral,lst_SpaceDTO, lst_UserDTO));
+				wdw_TicketGeneral.setContent(new Pnl_TicketCreate(wdw_TicketGeneral,lst_SpaceDTO, lst_UserDTO, lst_MaterialObjectDTO));
 				wdw_TicketGeneral.setWidth("50%");
 				/* show the notification window */
 				getUI().addWindow(wdw_TicketGeneral);

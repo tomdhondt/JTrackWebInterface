@@ -16,6 +16,4 @@
 	<import resource="META-INF/JTrackTicket-DAO.xml"/>
 	<import resource="META-INF/JTrackTicket-mapper.xml"/>
 	<import resource="META-INF/JTrackTicket-manager.xml"/>
-	<!-- Global Objects -->
-	<import resource="META-INF/JTrackTicket-defaultObject.xml"/>
 </beans>

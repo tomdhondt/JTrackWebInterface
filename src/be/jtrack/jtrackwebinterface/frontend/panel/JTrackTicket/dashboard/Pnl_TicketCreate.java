@@ -34,6 +34,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import be.jtrack.jtrackwebinterface.frontend.panel.global.L18NPanel;
 import be.jtrack.jtrackwebinterface.util.AttachmentUploader;
 import be.jtrack.jtrackwebinterface.util.Icon;
+import be.jtrackinventory.service.dto.MaterialObjectDTO;
 @SuppressWarnings("unchecked")
 public class Pnl_TicketCreate extends L18NPanel{
 	/**
@@ -63,6 +64,7 @@ public class Pnl_TicketCreate extends L18NPanel{
 	private ComboBox cmb_AllocateTo;
 	private ComboBox cmb_State;
 	private ComboBox cmb_Space;
+	private ComboBox cmb_MaterialObject;
 	/* Label */
 	private Label lbl_Title;
 	private Label lbl_TicketDescription;
@@ -72,12 +74,15 @@ public class Pnl_TicketCreate extends L18NPanel{
 	private Label lbl_Attachment;
 	private Label lbl_MailAllocatedTo;
 	private Label lbl_Space;
+	private Label lbl_MaterialObject;
 	/* data */
 	private Map<String, Status> map_ItemStatus;
 	private Map<String, SpaceDTO> map_SpaceDTO;
 	private Map<String, UserDTO> map_UserDTO;
+	private Map<String, MaterialObjectDTO> map_MaterialObjectDTO;
 	private List<SpaceDTO> lst_SpaceDTO;
 	private List<UserDTO> lst_UserDTO;
+	private List<MaterialObjectDTO> lst_MaterialObjectDTO;
 	/* CheckBox */
 	private CheckBox chb_mailAllocatedTo;
 	/* Window */
@@ -92,13 +97,16 @@ public class Pnl_TicketCreate extends L18NPanel{
 	 * Constructor for the class
 	 * @param parent as Window
 	 */
-	public Pnl_TicketCreate(Window parent, List<SpaceDTO> listSpaceDTO, List<UserDTO> listUserDTO){
+	public Pnl_TicketCreate(Window parent, List<SpaceDTO> listSpaceDTO, List<UserDTO> listUserDTO, List<MaterialObjectDTO> listMaterialObjectDTO){
 		this();
 		this.wdw_Parent = parent;
 		this.lst_SpaceDTO = listSpaceDTO;
 		this.lst_UserDTO = listUserDTO;
+		this.lst_MaterialObjectDTO = listMaterialObjectDTO;
 		this.initSpaceComboBox(this.cmb_Space, lst_SpaceDTO);
 		this.initCmbAllocatedTo(this.cmb_AllocateTo, lst_UserDTO);
+		this.initCmbMaterialObject(this.cmb_MaterialObject, lst_MaterialObjectDTO);
+		this.lst_MaterialObjectDTO = listMaterialObjectDTO;
 	}
 	/*
 	 * method will init the Panel
@@ -108,6 +116,7 @@ public class Pnl_TicketCreate extends L18NPanel{
 		this.map_ItemStatus = new HashMap<String, Status>();
 		this.map_SpaceDTO = new HashMap<String, SpaceDTO>();
 		this.map_UserDTO = new HashMap<String, UserDTO>();
+		this.map_MaterialObjectDTO = new HashMap<String, MaterialObjectDTO>();
 		/* Receiver */
 		AttachmentUploader receiver = new AttachmentUploader();
 		/* Upload */
@@ -180,6 +189,9 @@ public class Pnl_TicketCreate extends L18NPanel{
 		this.cmb_Space = new ComboBox();
 		this.cmb_Space.setWidth(abstractComponentWidht);
 		this.cmb_Space.setHeight(abstractComponentHeight);
+		this.cmb_MaterialObject = new ComboBox();
+		this.cmb_MaterialObject.setWidth(abstractComponentWidht);
+		this.cmb_MaterialObject.setHeight(abstractComponentHeight);
 		/* Label */
 		this.lbl_Title = new Label(captions.getString("CAP.LBL.26"));
 		this.lbl_Title.setStyleName("header");
@@ -190,6 +202,7 @@ public class Pnl_TicketCreate extends L18NPanel{
 		this.lbl_Attachment = new Label(captions.getString("CAP.LBL.31"));
 		this.lbl_MailAllocatedTo = new Label(captions.getString("CAP.LBL.32"));
 		this.lbl_Space = new Label(captions.getString("CAP.LBL.33"));
+		this.lbl_MaterialObject = new Label(captions.getString("CAP.LBL.33"));
 		this.lbl_Title.setHeight(abstractComponentHeight);
 		this.lbl_TicketTitle.setHeight(abstractComponentHeight);
 		this.lbl_TicketDescription.setHeight(abstractComponentHeight);
@@ -198,25 +211,28 @@ public class Pnl_TicketCreate extends L18NPanel{
 		this.lbl_Attachment.setHeight(abstractComponentHeight);
 		this.lbl_MailAllocatedTo.setHeight(abstractComponentHeight);
 		this.lbl_Space.setHeight(abstractComponentHeight);
+		this.lbl_MaterialObject.setHeight(abstractComponentHeight);
 		/* GridLayout */
-		this.grd_General = new GridLayout(2,9);
+		this.grd_General = new GridLayout(2,10);
 		this.grd_General.addComponent(this.lbl_Title,0,0);
 		this.grd_General.addComponent(this.lbl_TicketTitle,0,1);
 		this.grd_General.addComponent(this.lbl_TicketDescription,0,2);
 		this.grd_General.addComponent(this.lbl_AllocateTo,0,3);
 		this.grd_General.addComponent(this.lbl_State,0,4);
 		this.grd_General.addComponent(this.lbl_Space,0,5);
-		this.grd_General.addComponent(this.lbl_Attachment,0,6);
-		this.grd_General.addComponent(this.lbl_MailAllocatedTo,0,7);
+		this.grd_General.addComponent(this.lbl_MaterialObject,0,6);
+		this.grd_General.addComponent(this.lbl_Attachment,0,7);
+		this.grd_General.addComponent(this.lbl_MailAllocatedTo,0,8);
 		this.grd_General.addComponent(this.txt_TicketTitle,1,1);
 		this.grd_General.addComponent(this.txa_TicketDescription,1,2);
 		this.grd_General.addComponent(this.cmb_AllocateTo,1,3);
 		this.grd_General.addComponent(this.cmb_State,1,4);
 		this.grd_General.addComponent(this.cmb_Space,1,5);
-		this.grd_General.addComponent(this.upl_Attachment,1,6);
-		this.grd_General.addComponent(this.chb_mailAllocatedTo,1,7);
-		this.grd_General.addComponent(this.btn_Cancel,0,8);
-		this.grd_General.addComponent(this.btn_Save,1,8);
+		this.grd_General.addComponent(this.cmb_MaterialObject,1,6);
+		this.grd_General.addComponent(this.upl_Attachment,1,7);
+		this.grd_General.addComponent(this.chb_mailAllocatedTo,1,8);
+		this.grd_General.addComponent(this.btn_Cancel,0,9);
+		this.grd_General.addComponent(this.btn_Save,1,9);
 		this.grd_General.setComponentAlignment(this.btn_Save, Alignment.BOTTOM_RIGHT);
 		this.grd_General.setComponentAlignment(this.btn_Cancel, Alignment.BOTTOM_LEFT);
 		this.grd_General.setHeight("100%");
@@ -262,6 +278,15 @@ public class Pnl_TicketCreate extends L18NPanel{
 		}
 	}
 	/*
+	 * Method will initialize the comboBox whit the materialObjects
+	 */
+	private void initCmbMaterialObject(ComboBox comboBox, List<MaterialObjectDTO> list) {
+		for(MaterialObjectDTO mO : list){
+			comboBox.addItem(mO.getCaption());
+			this.map_MaterialObjectDTO.put(mO.getCaption(), mO);
+		}
+	}
+	/*
 	 * get the values out the fields and return a ItemDTO
 	 * @return itemDTO as ItemDTO
 	 */
@@ -272,6 +297,8 @@ public class Pnl_TicketCreate extends L18NPanel{
 		Status status = getSelectedvalueStatus(cmb_State, map_ItemStatus);
 		SpaceDTO spaceDTO = getSelectedSpaceDTO(cmb_Space, map_SpaceDTO);
 		UserDTO userDTO = getSelectedUserDTO(cmb_AllocateTo, map_UserDTO);
+		MaterialObjectDTO materialObjectDTO = getSelectedMaterialObjectDTO(cmb_MaterialObject, map_MaterialObjectDTO);
+		Attachment at = new Attachment();
 		/* Set the values to the ItemDTO */
 		ItemDTO dto = new ItemDTO();
 		dto.setEditReason(title);
@@ -306,6 +333,15 @@ public class Pnl_TicketCreate extends L18NPanel{
 	 * @return found object as SpaceDTO
 	 */
 	private SpaceDTO getSelectedSpaceDTO(ComboBox comboBox, Map<String, SpaceDTO> map){
+		return map.get(comboBox.getValue());
+	}
+	/*
+	 * Method will get the selected value out the comboBox
+	 * @param comboBox as ComboBox
+	 * @param map as Map
+	 * @return found object as MaterialObjectDTO
+	 */
+	private MaterialObjectDTO getSelectedMaterialObjectDTO(ComboBox comboBox, Map<String, MaterialObjectDTO> map){
 		return map.get(comboBox.getValue());
 	}
 }

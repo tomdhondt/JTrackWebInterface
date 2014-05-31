@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-	<bean id="propertyTypeDAOImpl" class="be.jtrackinventory.business.data.PropertyTypeDAOImpl"/>
-	<bean id="propertyGroupDAOImpl" class="be.jtrackinventory.business.data.PropertyGroupDAOImpl"/>
-	<bean id="materialComponentDAOImpl" class="be.jtrackinventory.business.data.MaterialComponentDAOImpl"/>
-	<bean id="materialComponentObjectDAOImpl" class="be.jtrackinventory.business.data.MaterialComponentObjectDAOImpl"/>
-	<bean id="materialDAOImpl" class="be.jtrackinventory.business.data.MaterialDAOImpl"/>
-	<bean id="locationDAOImpl" class="be.jtrackinventory.business.data.LocationDAOImpl"/>
-	<bean id="propertyDAOImpl" class="be.jtrackinventory.business.data.PropertyDAOImpl"/>
-	<bean id="valueDAOImpl" class="be.jtrackinventory.business.data.ValueDAOImpl"/>
-	<bean id="materialObjectDAOImpl" class="be.jtrackinventory.business.data.MaterialObjectDAOImpl"/>
+	<bean id="propertyTypeDAOImpl" class="be.jtrackinventory.business.data.PropertyTypeDAOImpl">
+		<constructor-arg index="0" ref="sessionFactory"/>
+	</bean>
+	<bean id="propertyGroupDAOImpl" class="be.jtrackinventory.business.data.PropertyGroupDAOImpl">
+		<constructor-arg index="0" ref="sessionFactory"/>
+	</bean>
+	<bean id="materialComponentDAOImpl" class="be.jtrackinventory.business.data.MaterialComponentDAOImpl">
+		<constructor-arg index="0" ref="sessionFactory"/>
+	</bean>
+	<bean id="materialComponentObjectDAOImpl" class="be.jtrackinventory.business.data.MaterialComponentObjectDAOImpl">
+		<constructor-arg index="0" ref="sessionFactory"/>
+	</bean>
+	<bean id="materialDAOImpl" class="be.jtrackinventory.business.data.MaterialDAOImpl">
+		<constructor-arg index="0" ref="sessionFactory"/>
+	</bean>
+	<bean id="locationDAOImpl" class="be.jtrackinventory.business.data.LocationDAOImpl">
+		<constructor-arg index="0" ref="sessionFactory"/>
+	</bean>
+	<bean id="propertyDAOImpl" class="be.jtrackinventory.business.data.PropertyDAOImpl">
+		<constructor-arg index="0" ref="sessionFactory"/>
+	</bean>
+	<bean id="valueDAOImpl" class="be.jtrackinventory.business.data.ValueDAOImpl">
+		<constructor-arg index="0" ref="sessionFactory"/>
+	</bean>
+	<bean id="materialObjectDAOImpl" class="be.jtrackinventory.business.data.MaterialObjectDAOImpl">
+		<constructor-arg index="0" ref="sessionFactory"/>
+	</bean>
 	<bean id="beforeObjectIsNull" class="be.jtrackinventory.aop.BeforeObjectIsNull"/>
 	<bean id="beforeAdviceJValidate" class="be.jtrackinventory.aop.BeforeAdviceJValidate"/>
 	<bean id="beforeAdviceLogger" class="be.jtrackinventory.aop.BeforeAdviceLogger"/>

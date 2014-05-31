@@ -208,7 +208,11 @@ public class Pnl_PropertyGroup extends L18NPanel{
 				/* get the PropertyGroup */
 				PropertyGroupDTO prGroupDTO = null;
 				try{
-					prGroupDTO = mapPropertyGroup.get(cmb_PropertyGroup.getValue());
+					for(PropertyGroupDTO dto : mapPropertyGroup.values()){
+						if(dto.getCaption() == (String)cmb_PropertyGroup.getValue()){
+							prGroupDTO = dto;
+						}
+					}
 				}catch(Exception e){
 				}
 				if(txt_UniqueId.getValue() != ""){
